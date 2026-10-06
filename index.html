@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create and customize a Dungeons & Dragons character">
+    <title>D&D Character Builder</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <script type="module" src="./src/js/main.js" defer></script>
+
+</head>
+<body>
+    <header class="site-header">
+            <a class="logo" href="index.html">
+                <span class="logo-icon">&#9670;</span>
+                <span>D&D Character Builder</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="index.html" class="active">Create Character</a>
+                <a href="characters.html">My Characters</a>
+            </nav>
+    </header>
+    <main class="main-content">
+        <section class="hero">
+            <h2>Create Your Character</h2>
+            <p>Begin your adventure by creating a new character.</p>
+        </section>
+        
+        <section class="builder-container">
+            <div class="builder-step" id="name-step">
+                <h2>Name Your Character</h2>
+                <p>Your character creation journey begins here.</p>
+
+                <form id="character-name-form">
+                    <div class="form-group">
+                        <label for="character-name">Character Name</label>
+                        <input type="text" id="character-name" name="character-name" placeholder="Enter a character name" maxlength="30" required>
+                        <p class="error-message" id="name-error"></p>
+                    </div>
+
+                    <button type="submit" class="primary-button">Continue</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 D&D Character Builder </p>
+    </footer>
+</body>
+</html>
