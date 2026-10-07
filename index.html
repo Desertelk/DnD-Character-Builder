@@ -46,6 +46,60 @@
                     <button type="submit" class="primary-button">Continue</button>
                 </form>
             </div>
+
+            <div class="builder-step" id="species-step">
+                <h2>Choose Your Species</h2>
+                <p>Select the species for your character.</p>
+                <div id="species-options" class="selection-grid"></div>
+                <p class="error-message" id="species-error"></p>
+            </div>
+
+            <div class="builder-step" id="class-step">
+                <h2>Choose Your Class</h2>
+                <p>Select the class your character will follow.</p>
+                <div id="class-options" class="selection-grid"></div>
+                <p class="error-message" id="class-error"></p>
+            </div>
+
+            <div class="builder-step" id="abilities-step">
+                <h2>Ability Scores</h2>
+                <p>Set your character's six core ability scores.</p>
+
+                <div class="ability-grid">
+                    <div class="ability-card">
+                        <label for="strength">Strength</label>
+                        <input type="number" id="strength" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">STR</span>
+                    </div>
+
+                    <div class="ability-card">
+                        <label for="dexterity">Dexterity</label>
+                        <input type="number" id="dexterity" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">DEX</span>
+                    </div>
+
+                    <div class="ability-card">
+                        <label for="constitution">Constitution</label>
+                        <input type="number" id="constitution" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">CON</span>
+                    </div>
+                    <div class="ability-card">
+                        <label for="intellience">Intelligence</label>
+                        <input type="number" id="intelligence" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">INT</span>
+                    </div>
+                    <div class="ability-card">
+                        <label for="wisdom">Wisdom</label>
+                        <input type="number" id="wisdom" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">WIS</span>
+                    </div>
+                    <div class="ability-card">
+                        <label for="charisma">Charisma</label>
+                        <input type="number" id="charisma" min="1" max="20" value="10">
+                        <span class="ability-abbreviation">CHA</span>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <footer>

@@ -106,6 +106,7 @@ h1, h2, h3 {
     color: var(--color-text-muted);
 }
 
+/* CHARACTER CREATION */
 .builder-container {
     width: 100%;
     max-width: 1000px;
@@ -197,6 +198,96 @@ footer {
     border-top: 1px solid var(--color-gold);
 }
 
+.selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.selection-card {
+    padding: 1rem;
+    border: 1px solid var(--color-gold);
+    border-radius: 6px;
+    background-color: var(--color-background);
+    color: var(--color-parchment);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 
+        background-color 0.2s ease, 
+        border-color 0.2s ease, 
+        transform 0.2s ease;
+}
+
+.selection-card:hover,
+.selection-card:focus {
+    background-color: var(--color-surface);
+    transform: translateY(-2px);
+}
+
+.selection-card.selected {
+    background-color: var(--color-red);
+    border-color: var(--color-gold);
+    color: var(--color-parchment);
+}
+
+/* LOADING RULES */
+.loading-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding: 1rem;
+}
+
+.ability-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.ability-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: 1.25rem;
+    border: 1px solid var(--color-gold);
+    border-radius: 6px;
+    background-color: var(--color-background);
+}
+
+.ability-card label {
+    font-family: var(--font-heading);
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+.ability-card input {
+    width: 70px;
+    padding: .5rem;
+    border: 1px solid var(--color-gold);
+    border-radius: 4px;
+    background-color: var(--color-surface);
+    font-family: var(--font-body);
+    color: var(--color-parchment);
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.ability-card input:focus {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+}
+
+.ability-abbreviation {
+    color: var(--color-text-muted);
+    font-size: .85rem;
+}
+
+
 /* MEDIA RULES */
 
 @media (max-width: 700px) {
@@ -222,5 +313,19 @@ footer {
 
     .builder-container {
         padding: 1rem;
+    }
+
+    .selection-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ability-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 412px) {
+    .ability-grid {
+        grid-template-columns: 1fr;
     }
 }

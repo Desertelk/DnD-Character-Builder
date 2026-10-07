@@ -16,7 +16,7 @@ export async function getClasses() {
 }
 
 export async function getSpecies() {
-    const data = await fetchDndData("equipment");
+    const data = await fetchDndData("races");
     return data.results;
 }
 
