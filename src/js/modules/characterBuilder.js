@@ -92,6 +92,9 @@ export async function initializeClassStep(character) {
             selectedCard.classList.add("selected");
 
             character.setClass(selectedCard.dataset.class);
+
+            window.dispatchEvent(new CustomEvent("characterClassChanged"));
+
             console.log("Class selected:", character.characterClass);
             console.log("Current Character:", character);
         });

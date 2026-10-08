@@ -65,6 +65,16 @@
                 <h2>Ability Scores</h2>
                 <p>Set your character's six core ability scores.</p>
 
+                <div class="ability-controls">
+                    <button type="button" id="roll-abilities" class="primary-button">
+                        Roll Ability Scores
+                    </button>
+
+                    <p id="roll-message" class="roll-message">
+                        Roll 4d6 and drop the lowest die for each ability
+                    </p>
+                </div>
+
                 <div class="ability-grid">
                     <div class="ability-card">
                         <label for="strength">Strength</label>
@@ -99,6 +109,26 @@
                         <span class="ability-abbreviation">CHA</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="builder-step" id="equipment-step">
+                <h2>Choose Your Equipment</h2>
+                <p>Select the equipment your character will carry.</p>
+
+                <div id="equipment-options" class="equipment-grid"></div>
+                <p id="equipment-message" class="selection-message">
+                    No equipment selected.
+                </p>
+            </div>
+
+            <div class="builder-step" id="spells-step">
+                <h2>Choose Your Spells</h2>
+                <p>Select the spells your character knows.</p>
+
+                <div id="spell-options" class="spell-grid"></div>
+                <p id="spell-message" class="selection-message">
+                    No spells selected.
+                </p>
             </div>
         </section>
     </main>

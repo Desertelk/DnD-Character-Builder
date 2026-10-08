@@ -287,6 +287,81 @@ footer {
     font-size: .85rem;
 }
 
+.ability-controls {
+    margin: 1.5rem 0;
+}
+
+.roll-message {
+    margin-top: .75rem;
+    color: var(--color-text-muted);
+    font-size: .9rem;
+}
+
+/* EQUIPMENT */
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.equipment-card {
+    padding: 1rem;
+    border: 1px solid var(--color-gold);
+    border-radius: 6px;
+    background-color: var(--color-background);
+    color: var(--color-parchment);
+    font-family: var(--font-heading);
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.equipment-card:hover,
+.equipment-card:focus {
+    background-color: var(--color-surface);
+    transform: translateY(-2px);
+}
+
+.equipment-card.selected {
+    background-color: var(--color-red);
+}
+
+.selection-message {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+}
+
+/* SPELLS */
+.spell-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.spell-card {
+    padding: 1rem;
+    border: 1px solid var(--color-gold);
+    border-radius: 6px;
+    background-color: var(--color-background);
+    color: var(--color-parchment);
+    font-family: var(--font-heading);
+    font-size: .95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.spell-card:hover,
+.spell-card:focus {
+    background-color: var(--color-surface);
+    transform: translateY(-2px);
+}
+
+.spell-card.selected {
+    background-color: var(--color-red);
+}
+
 
 /* MEDIA RULES */
 
@@ -322,9 +397,25 @@ footer {
     .ability-grid {
         grid-template-columns: 1fr 1fr;
     }
+    
+    .equipment-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .ability-grid  {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (max-width: 412px) {
+    .ability-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+
     .ability-grid {
         grid-template-columns: 1fr;
     }

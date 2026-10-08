@@ -1,5 +1,7 @@
 export function initializeAbilities(character) {
     const abilityInputs = document.querySelectorAll(".ability-card input");
+    const rollButton = document.querySelector("#roll-abilities");
+    const rollMessage = document.querySelector("#roll-message");
 
     abilityInputs.forEach((input) => {
 
@@ -23,4 +25,36 @@ export function initializeAbilities(character) {
             console.log("Current Character:", character);
         });
     });
+
+    rollButton.addEventListener("click", () => {
+        abilityInputs.forEach((input) => {
+            const score = rollAbilityScore();
+            input.value = score;
+            character.setAbility(input.id, score);
+        });
+
+        rollMessage.textContent = "Your ability scores have been rolled!";
+        console.log("Rolled Ability Scores:", character.abilities);
+        console.log("Current Character:", character);
+    })
 }
+
+function rollDie() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+function rollAbilityScore() {
+    const rolls = [
+        rollDie(),
+        rollDie(),
+        rollDie(),
+        rollDie()
+    ];
+
+    rolls.sort((a, b) => a - b);
+
+    rolls.shift();
+
+    return rolls.reduce((total, roll) => total + roll, 0)
+}
+
