@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Look at the summary of the character that you created!">
+    <title>D&D Character Summary</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <script type="module" src="./src/js/summary.js" defer></script>
+
+</head>
+<body>
+    <header class="site-header">
+            <a class="logo" href="index.html">
+                <span class="logo-icon">&#9670;</span>
+                <span>D&D Character Builder</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="index.html">Create Character</a>
+                <a href="characters.html">My Characters</a>
+            </nav>
+    </header>
+    <main>
+        <section>
+            <h1>Character Summary</h1>
+            <p>Review your character before saving.</p>
+
+            <div class="character-summary">
+                <div class="summary-header">
+                    <h2 id="summary-name"></h2>
+                    <p  id="summary-details"></p>
+                </div>
+
+                <h3>Ability Scores</h3>
+                <div id="summary-abilities" class="summary-ability-grid">
+                    
+                </div>
+
+                <h3>Equipment</h3>
+                <ul id="summary-equipment"></ul>
+
+                <h3>Spells</h3>
+                <ul id="summary-spells"></ul>
+            </div>
+
+            <div class="summary-actions">
+                <a href="index.html" class="primary-button">Back to Builder</a>
+                <button type="button" id="save-character" class="primary-button">
+                    Save Character
+                </button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 D&D Character Builder </p>
+    </footer>
+</body>
+</html>

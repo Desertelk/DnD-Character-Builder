@@ -1,5 +1,30 @@
 // import { getSpells, getSpellDetails } from "../api/dndApi";
-import { getOpen5eSpells } from "../api/open5eApi";
+import { getOpen5eSpellsByClass } from "../api/open5eApi.js";
+
+function getMaxSpellLevel(characterClass, characterLevel) {
+    const fullCasters = [
+        "bard", "cleric", "druid", "sorceror", "wizard"
+    ];
+
+    const halfCasters = ["paladin", "ranger"];
+
+    const selectedClass = characterClass.toLowerCase();
+
+    if (fullCasters.includes(selectedClass)) {
+        return Math.min(9, Math.ceil(characterLevel / 2));
+    }
+
+    if (halfCasters.includes(selectedClass)) {
+        if (characterLevel < 2) return -1;
+        return Math.min(5, Math.ceil(characterLevel / 4));
+    }
+
+    if (selectedClass === "warlock") {
+        return Math.min(5, Math.ceil(characterLevel / 2));
+    }
+
+    return -1;
+}
 
 export async function initializeSpells(character) {
     const spellContainer = document.querySelector("#spell-options");
@@ -15,20 +40,22 @@ export async function initializeSpells(character) {
     }
 
     spellContainer.innerHTML = `
-        <p class=loading-message">Loading spells...</p>
+        <p class="loading-message">Loading spells...</p>
     `;
 
     try {
-        const spells = await getOpen5eSpells();
+        const classSpells = await getOpen5eSpellsByClass(character.characterClass);
+        
+        const maxSpellLevel = getMaxSpellLevel(character.characterClass, character.level);
 
-        const spellDetails = await Promise.all(spells.map((spell) => getSpellDetails(spell.index)));
+        const filteredSpells = classSpells.filter((spell) => {
+            const spellLevel = Number(spell.level);
+            return spellLevel <= maxSpellLevel;
+        })
 
-        const filteredSpells = spellDetails.filter((spell) => 
-            spell.classes.some((spellClass) => spellClass.name.toLowerCase() === character.characterClass.toLowerCase())
-        );
 
         if (filteredSpells.length === 0) {
-            spellConatiner.innerHTML = `
+            spellContainer.innerHTML = `
                 <p class="loading-message">No spells are available for this class.</p>
             `;
 
@@ -80,3 +107,4 @@ function updateSpellMessage(character, messageElement) {
 
     messageElement.textContent = `${count} spell${count === 1 ? "" : "s"} selected.`;
 }
+

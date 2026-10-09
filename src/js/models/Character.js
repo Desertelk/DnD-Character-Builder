@@ -6,6 +6,7 @@ let spells;
 export default class Character {
     constructor(name = "") {
         this.name = name;
+        this.level = 1;
         this.species = null;
         this.characterClass = null;
 
@@ -46,5 +47,15 @@ export default class Character {
 
     addSpell(spell) {
         this.spells.push(spell);
+    }
+
+    setLevel(level) {
+        const newLevel = Number(level);
+
+        if (!Number.isInteger(newLevel) || newLevel < 1 || newLevel > 20) {
+            throw new Error("Character level must be between 1 and 20");
+        }
+
+        this.level = newLevel;
     }
 }

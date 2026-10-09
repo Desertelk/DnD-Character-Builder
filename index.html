@@ -59,6 +59,16 @@
                 <p>Select the class your character will follow.</p>
                 <div id="class-options" class="selection-grid"></div>
                 <p class="error-message" id="class-error"></p>
+
+                <div class="level-selection">
+                    <label for="character-level">Character Level</label>
+
+                    <select id="character-level" name="character-level">
+                        <option value="1">Level 1</option>
+                    </select>
+
+                    <p class="level-description">Choose your character's level (1-20)</p>
+                </div>
             </div>
 
             <div class="builder-step" id="abilities-step">
@@ -94,7 +104,7 @@
                         <span class="ability-abbreviation">CON</span>
                     </div>
                     <div class="ability-card">
-                        <label for="intellience">Intelligence</label>
+                        <label for="intelligence">Intelligence</label>
                         <input type="number" id="intelligence" min="1" max="20" value="10">
                         <span class="ability-abbreviation">INT</span>
                     </div>
@@ -129,6 +139,18 @@
                 <p id="spell-message" class="selection-message">
                     No spells selected.
                 </p>
+            </div>
+
+            <div class="builder-navigation">
+                <button type="button" id="previous-step" class="primary-button">
+                    Previous
+                </button>
+
+                <span id="step-indicator">Step 1 of 6</span>
+
+                <button type="button" id="next-step" class="primary-button">
+                    Next
+                </button>
             </div>
         </section>
     </main>

@@ -17,6 +17,7 @@ export function initializeNameStep(character) {
 
         errorMessage.textContent = "";
         character.setName(name);
+        window.dispatchEvent(new CustomEvent("characterNameSubmitted"));
 
         console.log("Character name saved:", character.name)
     });
@@ -35,7 +36,7 @@ export async function initializeSpeciesStep(character) {
 
         speciesContainer.innerHTML = species
             .map((item) => `
-                <button type="button" class="selection-card" data-species=${item.name}">${item.name}</button>
+                <button type="button" class="selection-card" data-species="${item.name}">${item.name}</button>
             `).join("");
 
         speciesContainer.addEventListener("click", (event) => {
@@ -52,6 +53,7 @@ export async function initializeSpeciesStep(character) {
             selectedCard.classList.add("selected");
 
             character.setSpecies(selectedCard.dataset.species);
+            errorMessage.textContent = "";
 
             console.log("Species selected:", character.species);
             console.log("Current character:", character);
@@ -92,6 +94,7 @@ export async function initializeClassStep(character) {
             selectedCard.classList.add("selected");
 
             character.setClass(selectedCard.dataset.class);
+            errorMessage.textContent = "";
 
             window.dispatchEvent(new CustomEvent("characterClassChanged"));
 
@@ -102,4 +105,24 @@ export async function initializeClassStep(character) {
         errorMessage.textContent = "Unable to load classes. Please try again.";
         console.error("Class API error:", error);
     }
+}
+
+export function initializeLevelSelection(character) {
+    const levelSelect = document.querySelector("#character-level");
+
+    for (let level = 2; level <= 20; level++) {
+        const option = document.createElement("option");
+        option.value = level;
+        option.textContent = `Level ${level}`;
+
+        levelSelect.appendChild(option);
+    }
+
+    levelSelect.value = String(character.level);
+
+    levelSelect.addEventListener("change", (event) => {
+        character.setLevel(event.target.value);
+        window.dispatchEvent(new CustomEvent("characterLevelChanged"));
+        console.log("Character level:", character.level);
+    });
 }
