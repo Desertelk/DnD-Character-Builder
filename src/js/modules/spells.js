@@ -1,9 +1,11 @@
 // import { getSpells, getSpellDetails } from "../api/dndApi";
 import { getOpen5eSpellsByClass } from "../api/open5eApi.js";
 
+let latestSpellRequest = 0;
+
 function getMaxSpellLevel(characterClass, characterLevel) {
     const fullCasters = [
-        "bard", "cleric", "druid", "sorceror", "wizard"
+        "bard", "cleric", "druid", "sorcerer", "wizard"
     ];
 
     const halfCasters = ["paladin", "ranger"];
@@ -29,6 +31,8 @@ function getMaxSpellLevel(characterClass, characterLevel) {
 export async function initializeSpells(character) {
     const spellContainer = document.querySelector("#spell-options");
     const spellMessage = document.querySelector("#spell-message");
+    const requestId = ++latestSpellRequest;
+    spellMessage.textContent = "";
 
     if (!character.characterClass) {
         spellContainer.innerHTML = `
@@ -45,6 +49,10 @@ export async function initializeSpells(character) {
 
     try {
         const classSpells = await getOpen5eSpellsByClass(character.characterClass);
+
+        if (requestId !== latestSpellRequest) {
+            return;
+        }
         
         const maxSpellLevel = getMaxSpellLevel(character.characterClass, character.level);
 
@@ -66,6 +74,19 @@ export async function initializeSpells(character) {
         spellContainer.innerHTML = filteredSpells.map((spell) => `
             <button type="button" class="spell-card" data-spell="${spell.name}">${spell.name}</button>
         `).join("");
+
+        spellContainer.querySelectorAll(".spell-card").forEach((card) => {
+            const spellName = card.dataset.spell;
+
+            if (character.spells.includes(spellName)) {
+                card.classList.add("selected");
+                card.setAttribute("aria-pressed", "true");
+            } else {
+                card.setAttribute("aria-pressed", "false");
+            }
+        });
+
+        updateSpellMessage(character, spellMessage);
     
         spellContainer.onclick = (event) => {
             const selectedCard = event.target.closest(".spell-card");
@@ -75,8 +96,10 @@ export async function initializeSpells(character) {
             }
     
             const spellName = selectedCard.dataset.spell;
-    
+
             selectedCard.classList.toggle("selected");
+
+            selectedCard.setAttribute("aria-pressed", String(selectedCard.classList.contains("selected")));
     
             if (selectedCard.classList.contains("selected")) {
                 character.addSpell(spellName);
@@ -90,8 +113,11 @@ export async function initializeSpells(character) {
             console.log("Current Character:", character);
         };
     } catch (error) {
+        if (requestId !== latestSpellRequest) {
+            return;
+        }
         spellContainer.innerHTML = "";
-        spellMessage.textContent = "Unable to load spells. please try again.";
+        spellMessage.textContent = "Unable to load spells. Please try again.";
 
         console.error("Spell API error:", error);
     }

@@ -21,7 +21,7 @@
             </a>
 
             <nav class="main-nav" aria-label="Main navigation">
-                <a href="index.html" class="active">Create Character</a>
+                <a href="index.html" class="active" aria-current="page">Create Character</a>
                 <a href="characters.html">My Characters</a>
             </nav>
     </header>
@@ -33,14 +33,14 @@
         
         <section class="builder-container">
             <div class="builder-step" id="name-step">
-                <h2>Name Your Character</h2>
+                <h2 tabindex="-1">Name Your Character</h2>
                 <p>Your character creation journey begins here.</p>
 
                 <form id="character-name-form">
                     <div class="form-group">
                         <label for="character-name">Character Name</label>
                         <input type="text" id="character-name" name="character-name" placeholder="Enter a character name" maxlength="30" required>
-                        <p class="error-message" id="name-error"></p>
+                        <p class="error-message" id="name-error" role="alert"></p>
                     </div>
 
                     <button type="submit" class="primary-button">Continue</button>
@@ -48,17 +48,17 @@
             </div>
 
             <div class="builder-step" id="species-step">
-                <h2>Choose Your Species</h2>
+                <h2 tabindex="-1">Choose Your Species</h2>
                 <p>Select the species for your character.</p>
                 <div id="species-options" class="selection-grid"></div>
-                <p class="error-message" id="species-error"></p>
+                <p class="error-message" id="species-error" role="alert"></p>
             </div>
 
             <div class="builder-step" id="class-step">
-                <h2>Choose Your Class</h2>
+                <h2 tabindex="-1">Choose Your Class</h2>
                 <p>Select the class your character will follow.</p>
                 <div id="class-options" class="selection-grid"></div>
-                <p class="error-message" id="class-error"></p>
+                <p class="error-message" id="class-error" role="alert"></p>
 
                 <div class="level-selection">
                     <label for="character-level">Character Level</label>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="builder-step" id="abilities-step">
-                <h2>Ability Scores</h2>
+                <h2 tabindex="-1">Ability Scores</h2>
                 <p>Set your character's six core ability scores.</p>
 
                 <div class="ability-controls">
@@ -122,21 +122,21 @@
             </div>
 
             <div class="builder-step" id="equipment-step">
-                <h2>Choose Your Equipment</h2>
+                <h2 tabindex="-1">Choose Your Equipment</h2>
                 <p>Select the equipment your character will carry.</p>
 
                 <div id="equipment-options" class="equipment-grid"></div>
-                <p id="equipment-message" class="selection-message">
+                <p id="equipment-message" class="selection-message" aria-live="polite">
                     No equipment selected.
                 </p>
             </div>
 
             <div class="builder-step" id="spells-step">
-                <h2>Choose Your Spells</h2>
+                <h2 tabindex="-1">Choose Your Spells</h2>
                 <p>Select the spells your character knows.</p>
 
                 <div id="spell-options" class="spell-grid"></div>
-                <p id="spell-message" class="selection-message">
+                <p id="spell-message" class="selection-message" aria-live="polite">
                     No spells selected.
                 </p>
             </div>
@@ -146,7 +146,7 @@
                     Previous
                 </button>
 
-                <span id="step-indicator">Step 1 of 6</span>
+                <span id="step-indicator" aria-live="polite">Step 1 of 6</span>
 
                 <button type="button" id="next-step" class="primary-button">
                     Next

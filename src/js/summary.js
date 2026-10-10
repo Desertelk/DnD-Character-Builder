@@ -63,3 +63,38 @@ if (savedCharacter) {
     document.querySelector("#summary-details").textContent = "Please create a character first.";
 }
 
+const saveButton = document.querySelector("#save-character");
+
+saveButton.addEventListener("click", () => {
+    const currentCharacter = sessionStorage.getItem("currentCharacter");
+
+    if (!currentCharacter) {
+        alert("No character available to save.");
+        return;
+    }
+
+    const character = JSON.parse(currentCharacter);
+
+    const savedCharacters = JSON.parse(localStorage.getItem("savedCharacters")) || [];
+
+    if (character.id && savedCharacters.some((saved) => saved.id === character.id)) {
+        alert("This character has already been saved.");
+        return;
+    }
+
+    character.id = character.id || crypto.randomUUID();
+
+    savedCharacters.push(character);
+
+    sessionStorage.setItem(
+        "currentCharacter",
+        JSON.stringify(character)
+    );
+
+    localStorage.setItem(
+        "savedCharacters",
+        JSON.stringify(savedCharacters)
+    );
+
+    alert("Character saved successfully!");
+});

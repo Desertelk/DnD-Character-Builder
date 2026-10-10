@@ -3,6 +3,10 @@ import { getSpecies, getClasses } from "../api/dndApi.js"
 export function initializeNameStep(character) {
     const form = document.querySelector("#character-name-form");
     const nameInput = document.querySelector("#character-name");
+    if (character.name) {
+        nameInput.value = character.name;
+    }
+
     const errorMessage = document.querySelector("#name-error");
 
     form.addEventListener("submit", (event) => {
@@ -11,7 +15,7 @@ export function initializeNameStep(character) {
         const name = nameInput.value.trim();
 
         if(!name) {
-            errorMessage.textContent = "Please eneter a character name.";
+            errorMessage.textContent = "Please enter a character name.";
             return;
         }
 
@@ -26,6 +30,7 @@ export function initializeNameStep(character) {
 export async function initializeSpeciesStep(character) {
     const speciesContainer = document.querySelector("#species-options");
     const errorMessage = document.querySelector("#species-error");
+    errorMessage.textContent = "";
 
     speciesContainer.innerHTML = `
         <p class=loading-message>Loading species...</p>
@@ -36,8 +41,17 @@ export async function initializeSpeciesStep(character) {
 
         speciesContainer.innerHTML = species
             .map((item) => `
-                <button type="button" class="selection-card" data-species="${item.name}">${item.name}</button>
+                <button type="button" class="selection-card" data-species="${item.name}" aria-pressed="false">${item.name}</button>
             `).join("");
+
+        if (character.species) {
+            speciesContainer.querySelectorAll(".selection-card").forEach((card) => {
+                if (card.dataset.species === character.species) {
+                    card.classList.add("selected");
+                    card.setAttribute("aria-pressed", "true");
+                }
+            });
+        }
 
         speciesContainer.addEventListener("click", (event) => {
             const selectedCard = event.target.closest(".selection-card");
@@ -46,11 +60,13 @@ export async function initializeSpeciesStep(character) {
                 return;
             }
 
-            document
-                .querySelectorAll("#species-options .selection-card")
-                .forEach((card) => card.classList.remove("selected"));
+            speciesContainer.querySelectorAll(".selection-card").forEach((card) => {
+                    card.classList.remove("selected");
+                    card.setAttribute("aria-pressed", "false");
+            });
 
             selectedCard.classList.add("selected");
+            selectedCard.setAttribute("aria-pressed", "true");
 
             character.setSpecies(selectedCard.dataset.species);
             errorMessage.textContent = "";
@@ -68,6 +84,7 @@ export async function initializeSpeciesStep(character) {
 export async function initializeClassStep(character) {
     const classContainer = document.querySelector("#class-options");
     const errorMessage = document.querySelector("#class-error");
+    errorMessage.textContent = "";
 
     classContainer.innerHTML = `
         <p class="loading-message">Loading classes...</p>
@@ -77,8 +94,17 @@ export async function initializeClassStep(character) {
         const classes = await getClasses();
 
         classContainer.innerHTML = classes.map((item) => `
-            <button type="button" class="selection-card" data-class="${item.name}">${item.name}</button>`
+            <button type="button" class="selection-card" data-class="${item.name}" aria-pressed="false">${item.name}</button>`
         ).join("");
+
+        if (character.characterClass) {
+            classContainer.querySelectorAll(".selection-card").forEach((card) => {
+                if (card.dataset.class === character.characterClass) {
+                    card.classList.add("selected");
+                    card.setAttribute("aria-pressed", "true");
+                }
+            });
+        }
 
         classContainer.addEventListener("click", (event) => {
             const selectedCard = event.target.closest(".selection-card");
@@ -87,11 +113,13 @@ export async function initializeClassStep(character) {
                 return;
             }
 
-            document
-                .querySelectorAll("#class-options .selection-card")
-                .forEach((card) => card.classList.remove("selected"));
+            classContainer.querySelectorAll(".selection-card").forEach((card) => {
+                card.classList.remove("selected");
+                card.setAttribute("aria-pressed", "false");
+            });
 
             selectedCard.classList.add("selected");
+            selectedCard.setAttribute("aria-pressed", "true");
 
             character.setClass(selectedCard.dataset.class);
             errorMessage.textContent = "";
@@ -102,6 +130,7 @@ export async function initializeClassStep(character) {
             console.log("Current Character:", character);
         });
     } catch (error) {
+        classContainer.innerHTML = "";
         errorMessage.textContent = "Unable to load classes. Please try again.";
         console.error("Class API error:", error);
     }
@@ -118,7 +147,9 @@ export function initializeLevelSelection(character) {
         levelSelect.appendChild(option);
     }
 
-    levelSelect.value = String(character.level);
+    if (character.level) {
+        levelSelect.value = String(character.level);
+    }
 
     levelSelect.addEventListener("change", (event) => {
         character.setLevel(event.target.value);

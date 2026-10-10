@@ -6,7 +6,7 @@ export function initializeNavigation(character) {
 
     let currentStep = 0;
 
-    function showStep() {
+    function showStep(moveFocus = false) {
         steps.forEach((step, index) => {
             step.hidden = index !== currentStep;
         });
@@ -22,12 +22,18 @@ export function initializeNavigation(character) {
 
         stepIndicator.textContent = `Step ${currentStep + 1} of ${steps.length}`;
 
+        if (moveFocus) {
+            const activeStep = steps[currentStep];
+            const heading = activeStep.querySelector("h2");
+
+            heading?.focus();
+        }
     }
 
     previousButton.addEventListener("click", () => {
         if (currentStep > 0) {
             currentStep--;
-            showStep();
+            showStep(true);
         }
     });
 
@@ -51,14 +57,14 @@ export function initializeNavigation(character) {
 
         if (currentStep < steps.length -1) {
             currentStep++;
-            showStep();
+            showStep(true);
         }
     });
 
     window.addEventListener("characterNameSubmitted", () => {
         if (currentStep === 0) {
             currentStep = 1;
-            showStep();
+            showStep(true);
         }
     });
 

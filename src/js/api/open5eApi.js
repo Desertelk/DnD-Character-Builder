@@ -35,13 +35,4 @@ export async function getOpen5eSpellsByClass(characterClass) {
     }
 
     return allSpells;
-
-    // const response = await fetch(`https://api.open5e.com/v2/spells/?classes__key=${encodeURIComponent(classKey)}`);
-
-    // if (!response.ok) {
-    //     throw new Error(`Open5e API error: ${response.status}`);
-    // }
-
-    // const data = await response.json();
-    // return data.results;
 }

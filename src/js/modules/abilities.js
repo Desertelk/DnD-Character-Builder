@@ -4,8 +4,14 @@ export function initializeAbilities(character) {
     const rollMessage = document.querySelector("#roll-message");
 
     abilityInputs.forEach((input) => {
+        const savedScore = character.abilities[input.id];
 
-        character.setAbility(input.id, Number(input.value));
+        if (savedScore !== undefined && savedScore !== null) {
+            input.value = savedScore;
+        } else {
+            character.setAbility(input.id, Number(input.value));
+        }
+
         
         input.addEventListener("change", () => {
             const score = Number(input.value);
@@ -30,13 +36,15 @@ export function initializeAbilities(character) {
         abilityInputs.forEach((input) => {
             const score = rollAbilityScore();
             input.value = score;
+            input.setCustomValidity("");
             character.setAbility(input.id, score);
         });
 
         rollMessage.textContent = "Your ability scores have been rolled!";
         console.log("Rolled Ability Scores:", character.abilities);
         console.log("Current Character:", character);
-    })
+        });
+        
 }
 
 function rollDie() {
