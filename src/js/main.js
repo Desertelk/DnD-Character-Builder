@@ -9,6 +9,13 @@ import { initializeNavigation } from "./modules/navigation";
 
 const currentCharacter = new Character();
 
+const urlParams = new URLSearchParams(window.location.search);
+const startNew = urlParams.get("new") === "true";
+
+if (startNew) {
+    sessionStorage.removeItem("currentCharacter");
+}
+
 const storedCharacter = sessionStorage.getItem("currentCharacter");
 
 if (storedCharacter) {
