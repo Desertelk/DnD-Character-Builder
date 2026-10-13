@@ -6,6 +6,7 @@ export function initializeNavigation(character) {
 
     let currentStep = 0;
 
+    // Show the active builder step and update navigation buttons and progress.
     function showStep(moveFocus = false) {
         steps.forEach((step, index) => {
             step.hidden = index !== currentStep;
@@ -15,13 +16,14 @@ export function initializeNavigation(character) {
 
         nextButton.hidden = currentStep === 0;
 
-        const isLastStep = currentStep === steps.length -1;
+        const isLastStep = currentStep === steps.length - 1;
 
         nextButton.textContent = isLastStep ? "Review Character" : "Next";
         nextButton.disabled = false;
 
         stepIndicator.textContent = `Step ${currentStep + 1} of ${steps.length}`;
 
+        // Move keyboard focus to the nw step heading for accessibility
         if (moveFocus) {
             const activeStep = steps[currentStep];
             const heading = activeStep.querySelector("h2");
@@ -48,6 +50,7 @@ export function initializeNavigation(character) {
             return;
         }
 
+        // Save the current character before navigating to the summary page.
         if (currentStep === steps.length - 1) {
             sessionStorage.setItem("currentCharacter", JSON.stringify(character));
 
@@ -55,7 +58,7 @@ export function initializeNavigation(character) {
             return;
         }
 
-        if (currentStep < steps.length -1) {
+        if (currentStep < steps.length - 1) {
             currentStep++;
             showStep(true);
         }

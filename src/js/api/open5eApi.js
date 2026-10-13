@@ -10,16 +10,6 @@ async function fetchOpen5eData(endpoint) {
     return response.json();
 }
 
-export async function getOpen5eSpecies() {
-    const data = await fetchOpen5eData("species");
-    return data.results;
-}
-
-export async function getOpen5eSpells() {
-    const data = await fetchOpen5eData("spells");
-    return data.results;
-}
-
 export async function getOpen5eSpellsByClass(characterClass) {
     const classKey = `srd_${characterClass.toLowerCase()}`;
 

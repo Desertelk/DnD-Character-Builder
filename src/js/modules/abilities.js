@@ -4,6 +4,8 @@ export function initializeAbilities(character) {
     const rollMessage = document.querySelector("#roll-message");
 
     abilityInputs.forEach((input) => {
+
+        // Restore saved ability scores or initialize them with their default values.
         const savedScore = character.abilities[input.id];
 
         if (savedScore !== undefined && savedScore !== null) {
@@ -26,9 +28,6 @@ export function initializeAbilities(character) {
 
             input.setCustomValidity("");
             character.setAbility(input.id, score);
-
-            console.log(`${input.id}:`, score);
-            console.log("Current Character:", character);
         });
     });
 
@@ -41,8 +40,6 @@ export function initializeAbilities(character) {
         });
 
         rollMessage.textContent = "Your ability scores have been rolled!";
-        console.log("Rolled Ability Scores:", character.abilities);
-        console.log("Current Character:", character);
         });
         
 }
@@ -51,6 +48,7 @@ function rollDie() {
     return Math.floor(Math.random() * 6) + 1;
 }
 
+// Roll four six-sided dice, discard the lowest roll, and total the remaining three.
 function rollAbilityScore() {
     const rolls = [
         rollDie(),
@@ -60,7 +58,6 @@ function rollAbilityScore() {
     ];
 
     rolls.sort((a, b) => a - b);
-
     rolls.shift();
 
     return rolls.reduce((total, roll) => total + roll, 0)

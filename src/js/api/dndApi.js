@@ -24,8 +24,3 @@ export async function getEquipment() {
     const data = await fetchDndData("equipment");
     return data.results;
 }
-
-export async function getSpells() {
-    const data = await fetchDndData("spells");
-    return data.results;
-}

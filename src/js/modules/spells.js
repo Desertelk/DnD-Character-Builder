@@ -1,5 +1,5 @@
-// import { getSpells, getSpellDetails } from "../api/dndApi";
 import { getOpen5eSpellsByClass } from "../api/open5eApi.js";
+import d20Image from "../../images/d20-die.svg";
 
 let latestSpellRequest = 0;
 
@@ -31,6 +31,8 @@ function getMaxSpellLevel(characterClass, characterLevel) {
 export async function initializeSpells(character) {
     const spellContainer = document.querySelector("#spell-options");
     const spellMessage = document.querySelector("#spell-message");
+
+    // Track requests so older API responses cannot overwrite newer spell results.
     const requestId = ++latestSpellRequest;
     spellMessage.textContent = "";
 
@@ -44,7 +46,10 @@ export async function initializeSpells(character) {
     }
 
     spellContainer.innerHTML = `
-        <p class="loading-message">Loading spells...</p>
+        <div class="d20-loader" role="status">
+            <img src="${d20Image}" class="d20-die" alt="d20 die loading image" aria-hidden="true">
+            <p>Loading spells...</p>
+        </div>
     `;
 
     try {
@@ -54,12 +59,14 @@ export async function initializeSpells(character) {
             return;
         }
         
+        // Determine the maximum spell level based on the character's class and level.
         const maxSpellLevel = getMaxSpellLevel(character.characterClass, character.level);
 
+        // Display only spells available at the character's current level.
         const filteredSpells = classSpells.filter((spell) => {
             const spellLevel = Number(spell.level);
             return spellLevel <= maxSpellLevel;
-        })
+        });
 
 
         if (filteredSpells.length === 0) {
@@ -75,6 +82,7 @@ export async function initializeSpells(character) {
             <button type="button" class="spell-card" data-spell="${spell.name}">${spell.name}</button>
         `).join("");
 
+        // Restore previously selected spells after the spell list reloads
         spellContainer.querySelectorAll(".spell-card").forEach((card) => {
             const spellName = card.dataset.spell;
 
@@ -108,9 +116,6 @@ export async function initializeSpells(character) {
             }
     
             updateSpellMessage(character, spellMessage);
-    
-            console.log("Spells:", character.spells);
-            console.log("Current Character:", character);
         };
     } catch (error) {
         if (requestId !== latestSpellRequest) {
@@ -118,8 +123,7 @@ export async function initializeSpells(character) {
         }
         spellContainer.innerHTML = "";
         spellMessage.textContent = "Unable to load spells. Please try again.";
-
-        console.error("Spell API error:", error);
+        console.error("Spells API error:", error);
     }
 }
 

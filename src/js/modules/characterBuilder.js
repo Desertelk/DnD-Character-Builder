@@ -1,4 +1,5 @@
 import { getSpecies, getClasses } from "../api/dndApi.js"
+import d20Image from "../../images/d20-die.svg"
 
 export function initializeNameStep(character) {
     const form = document.querySelector("#character-name-form");
@@ -22,8 +23,6 @@ export function initializeNameStep(character) {
         errorMessage.textContent = "";
         character.setName(name);
         window.dispatchEvent(new CustomEvent("characterNameSubmitted"));
-
-        console.log("Character name saved:", character.name)
     });
 }
 
@@ -33,7 +32,10 @@ export async function initializeSpeciesStep(character) {
     errorMessage.textContent = "";
 
     speciesContainer.innerHTML = `
-        <p class=loading-message>Loading species...</p>
+        <div class="d20-loader" role="status">
+            <img src="${d20Image}" class="d20-die" alt="d20 die loading image" aria-hidden="true">
+            <p>Loading species...</p>
+        </div>
     `;
 
     try {
@@ -44,6 +46,7 @@ export async function initializeSpeciesStep(character) {
                 <button type="button" class="selection-card" data-species="${item.name}" aria-pressed="false">${item.name}</button>
             `).join("");
 
+        // Restore the previously selected species when returning to the builder
         if (character.species) {
             speciesContainer.querySelectorAll(".selection-card").forEach((card) => {
                 if (card.dataset.species === character.species) {
@@ -70,14 +73,10 @@ export async function initializeSpeciesStep(character) {
 
             character.setSpecies(selectedCard.dataset.species);
             errorMessage.textContent = "";
-
-            console.log("Species selected:", character.species);
-            console.log("Current character:", character);
         });
     } catch (error) {
         speciesContainer.innerHTML = "";
         errorMessage.textContent = "Unable to load species. Please try again.";
-        console.error("Species API error:", error);
     }
 }
 
@@ -87,7 +86,10 @@ export async function initializeClassStep(character) {
     errorMessage.textContent = "";
 
     classContainer.innerHTML = `
-        <p class="loading-message">Loading classes...</p>
+        <div class="d20-loader" role="status">
+            <img src="${d20Image}" class="d20-die" alt="" aria-hidden="true">
+            <p>Loading classes...</p>
+        </div>
     `;
 
     try {
@@ -124,21 +126,19 @@ export async function initializeClassStep(character) {
             character.setClass(selectedCard.dataset.class);
             errorMessage.textContent = "";
 
+            // Notify the spell module that the character's class has changed
             window.dispatchEvent(new CustomEvent("characterClassChanged"));
-
-            console.log("Class selected:", character.characterClass);
-            console.log("Current Character:", character);
         });
     } catch (error) {
         classContainer.innerHTML = "";
         errorMessage.textContent = "Unable to load classes. Please try again.";
-        console.error("Class API error:", error);
     }
 }
 
 export function initializeLevelSelection(character) {
     const levelSelect = document.querySelector("#character-level");
 
+    // Add levels 2-20 to the dropdown. Level 1 is already in the HTML.
     for (let level = 2; level <= 20; level++) {
         const option = document.createElement("option");
         option.value = level;
@@ -154,6 +154,5 @@ export function initializeLevelSelection(character) {
     levelSelect.addEventListener("change", (event) => {
         character.setLevel(event.target.value);
         window.dispatchEvent(new CustomEvent("characterLevelChanged"));
-        console.log("Character level:", character.level);
     });
 }

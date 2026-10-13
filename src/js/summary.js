@@ -1,5 +1,3 @@
-import { getOpen5eSpellsByClass } from "./api/open5eApi";
-
 const savedCharacter = sessionStorage.getItem("currentCharacter");
 const abilitiesContainer = document.querySelector("#summary-abilities");
 const equipmentContainer = document.querySelector("#summary-equipment");
@@ -10,8 +8,6 @@ if (savedCharacter) {
     document.querySelector("#summary-name").textContent = character.name;
     document.querySelector("#summary-details").textContent = 
         `Level ${character.level} ${character.species} ${character.characterClass}`;
-
-    console.log("Character loaded:", character);
 
     Object.entries(character.abilities).forEach(([ability, score]) => {
         const abilityCard = document.createElement("div");
@@ -57,13 +53,15 @@ if (savedCharacter) {
     }
 
 } else {
-    console.log("No character data found.");
-
     document.querySelector("#summary-name").textContent = "No character found";
     document.querySelector("#summary-details").textContent = "Please create a character first.";
 }
 
 const saveButton = document.querySelector("#save-character");
+
+if (!savedCharacter) {
+    saveButton.disabled = true;
+}
 
 saveButton.addEventListener("click", () => {
     const currentCharacter = sessionStorage.getItem("currentCharacter");

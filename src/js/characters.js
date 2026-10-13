@@ -16,6 +16,8 @@ if (savedCharacters.length === 0) {
 
     charactersContainer.appendChild(message);
 } else {
+
+    // Assign unique IDs to previously saved characters that don't have one
     savedCharacters.forEach((character) => {
         const characterCard = document.createElement("div");
         characterCard.classList.add("character-card");
@@ -25,7 +27,7 @@ if (savedCharacters.length === 0) {
 
         const characterDetails = document.createElement("p");
         characterDetails.textContent =
-        `Level ${character.level} ${character.species} ${character.characterClass}`;
+            `Level ${character.level} ${character.species} ${character.characterClass}`;
 
         const viewButton = document.createElement("button");
         viewButton.type = "button";
@@ -33,6 +35,8 @@ if (savedCharacters.length === 0) {
         viewButton.textContent = "View Character";
 
         viewButton.addEventListener("click", () => {
+
+            // Store the selected character so its details can be details can be displayed on the summary page.
             sessionStorage.setItem("currentCharacter", JSON.stringify(character));
             window.location.href = "summary.html";
         });
@@ -49,15 +53,23 @@ if (savedCharacters.length === 0) {
             const currentSavedCharacters = JSON.parse(localStorage.getItem("savedCharacters")) || [];
 
             const updatedCharacters = currentSavedCharacters.filter(
+
+                // Remove only the selected character by matching its unique ID.
                 (saved) => saved.id !== character.id
             );
 
             localStorage.setItem("savedCharacters", JSON.stringify(updatedCharacters));
 
             characterCard.remove();
+
+            if (updatedCharacters.length  === 0) {
+                const message = document.createElement("p");
+                message.textContent = "You haven't saved any characters yet."
+                charactersContainer.appendChild(message);
+            }
         });
 
-        characterCard.appendChild(characterName)
+        characterCard.appendChild(characterName);
         characterCard.appendChild(characterDetails);
         characterCard.appendChild(viewButton);
         characterCard.appendChild(deleteButton);

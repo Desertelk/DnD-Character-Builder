@@ -1,8 +1,3 @@
-let characterName;
-let characterClass;
-let species;
-let spells;
-
 export default class Character {
     constructor(name = "") {
         this.name = name;
