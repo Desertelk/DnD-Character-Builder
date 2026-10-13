@@ -1,4 +1,5 @@
 export default class Character {
+    // Initialize a new character with default attributes and empty selection
     constructor(name = "") {
         this.name = name;
         this.level = 1;
@@ -47,6 +48,7 @@ export default class Character {
     setLevel(level) {
         const newLevel = Number(level);
 
+        // Only update abilities that exist in the character's ability list.
         if (!Number.isInteger(newLevel) || newLevel < 1 || newLevel > 20) {
             throw new Error("Character level must be between 1 and 20");
         }

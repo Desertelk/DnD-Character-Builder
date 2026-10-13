@@ -3,6 +3,7 @@ const abilitiesContainer = document.querySelector("#summary-abilities");
 const equipmentContainer = document.querySelector("#summary-equipment");
 const spellContainer = document.querySelector("#summary-spells");
 
+// Retrieve the completed character from session storage and display its details
 if (savedCharacter) {
     const character = JSON.parse(savedCharacter);
     document.querySelector("#summary-name").textContent = character.name;
@@ -32,6 +33,8 @@ if (savedCharacter) {
     } else {
         character.equipment.forEach((item) => {
             const equipmentItem = document.createElement("li");
+
+            // Support equipment stored as either a name or an object
             equipmentItem.textContent = typeof item === "string" ? item : item.name;
 
             equipmentContainer.appendChild(equipmentItem);
@@ -75,11 +78,13 @@ saveButton.addEventListener("click", () => {
 
     const savedCharacters = JSON.parse(localStorage.getItem("savedCharacters")) || [];
 
+    // Prevent the same character from being saved multiple times
     if (character.id && savedCharacters.some((saved) => saved.id === character.id)) {
         alert("This character has already been saved.");
         return;
     }
 
+    // Assigns a unique ID to new characters while preserving existing IDs
     character.id = character.id || crypto.randomUUID();
 
     savedCharacters.push(character);
